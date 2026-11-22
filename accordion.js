@@ -11,7 +11,9 @@
 
 const accordionBtns = document.querySelectorAll(".accordion");
 
-accordionBtns.forEach((accordion) => {
+accordionBtns.forEach((accordion, index) => {
+  accordion.nextElementSibling.style.visibility = "hidden";
+
   accordion.onclick = function () {
     this.classList.toggle("is-open");
 
@@ -21,10 +23,35 @@ accordionBtns.forEach((accordion) => {
     if (content.style.maxHeight) {
       //this is if the accordion is open
       content.style.maxHeight = null;
+      content.style.visibility = "hidden";
+      this.setAttribute("aria-expanded", "false");
     } else {
       //if the accordion is currently closed
       content.style.maxHeight = content.scrollHeight + "px";
+      content.style.visibility = "visible";
+      this.setAttribute("aria-expanded", "true");
       console.log(content.style.maxHeight);
     }
   };
+
+  accordion.onkeydown = function (e) {
+    let last = accordionBtns.length - 1;
+    let target;
+
+    if (e.key === "ArrowDown") {
+      target = index === last ? 0 : index + 1;
+    } else if (e.key === "ArrowUp") {
+      target = index === 0 ? last : index - 1;
+    } else if (e.key === "Home") {
+      target = 0;
+    } else if (e.key === "End") {
+      target = last;
+    } else {
+      return;
+    }
+
+    e.preventDefault();
+    accordionBtns[target].focus();
+  };
 });
+
