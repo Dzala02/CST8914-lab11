@@ -21,12 +21,12 @@ accordionBtns.forEach((accordion, index) => {
     console.log(content);
 
     if (content.style.maxHeight) {
-      //this is if the accordion is open
+      //open
       content.style.maxHeight = null;
       content.style.visibility = "hidden";
       this.setAttribute("aria-expanded", "false");
     } else {
-      //if the accordion is currently closed
+      // closed
       content.style.maxHeight = content.scrollHeight + "px";
       content.style.visibility = "visible";
       this.setAttribute("aria-expanded", "true");
